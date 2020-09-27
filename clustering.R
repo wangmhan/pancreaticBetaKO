@@ -25,9 +25,7 @@ panc <- NormalizeData(object = panc,
 panc <- FindVariableGenes(object = panc, mean.function = ExpMean, dispersion.function = LogVMR, 
                           x.low.cutoff = 0.0125, x.high.cutoff = 5, y.cutoff = 0.25)
 length(x = panc@var.genes)
-panc <- ScaleData(object = panc, vars.to.regress = c("nUMI", "percent.mito"))
-
-tmp1 <- factor(substr(panc@ident,1,5)); names(tmp1) <- names(panc@ident)
+panc <- ScaleData(object = panc, vars.to.regress = c("nUMI"))
 
 panc <- RunPCA(object = panc, pc.genes = panc@var.genes, do.print = TRUE, pcs.print = 1:5, 
     genes.print = 5)
