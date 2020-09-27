@@ -1,8 +1,8 @@
-setwd("/Users/menwan/Documents/project/genewizPanc");
+setwd("/Users/Documents/project/genewizPanc");
 library(readr); library(Seurat); 
 library(dplyr); library(scater)
 
-read_data <- "panc_scReadCount_afterQC.txt"
+read_data <- "pancreaticBetaCell_count.txt.gz"
 
 expdata <- read.table(gzfile(read_data), header = TRUE, sep="\t", row.names=1)
 dim(expdata); expdata <- as.matrix(expdata)
@@ -22,8 +22,6 @@ panc@meta.data$orig.ident <- substr(panc@meta.data$orig.ident,1,5)
 panc <- NormalizeData(object = panc, 
   normalization.method = "LogNormalize", scale.factor = 10000)
 
-#For example for UMI data normalized to a total of 10 000 molecules, 
-#one would expect ~2,000 variable genes.
 panc <- FindVariableGenes(object = panc, mean.function = ExpMean, dispersion.function = LogVMR, 
                           x.low.cutoff = 0.0125, x.high.cutoff = 5, y.cutoff = 0.25)
 length(x = panc@var.genes)
